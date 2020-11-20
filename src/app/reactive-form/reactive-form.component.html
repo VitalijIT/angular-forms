@@ -1,0 +1,85 @@
+<h2>Provide order info</h2>
+
+<form class="form-control"
+      [formGroup]="orderInfo"
+      (submit)="onSubmit(orderInfo)">
+
+    <label for="fullName">*Full name:
+        <input formControlName="fullName" type="string" id="fullName">
+    </label>
+    <div *ngIf="orderInfo.controls.fullName.invalid && orderInfo.controls.fullName.touched">
+        <p class="validation" *ngIf="orderInfo.controls.fullName.errors.required">*This field is required</p>
+        <p class="validation" *ngIf="orderInfo.controls.fullName.errors.minlength">*This field has to contain more than {{orderInfo.controls.fullName.errors.minlength.requiredLength}} characters</p>
+        <p class="validation" *ngIf="orderInfo.controls.fullName.errors.pattern">*This field must contain at least two words consisting only of letters</p>
+    </div>
+
+    <ng-container formGroupName="billingAddress">
+        Billing address:
+
+        <label for="address">
+            *Address:
+            <input formControlName="address" type="string" id="address">
+        </label>
+        <div *ngIf="orderInfo.controls.billingAddress.controls.address.invalid">
+            <p class="validation" *ngIf="orderInfo.controls.billingAddress.controls.address.errors.required">*This field is required</p>
+            <p class="validation" *ngIf="orderInfo.controls.billingAddress.controls.address.errors.pattern">*This field is incorrect</p>
+        </div>
+        <label for="postalCode">
+            *Postal code:
+            <input formControlName="postalCode" type="string" id="postalCode">
+            <span>*Postal code has to by in format **-***</span>
+        </label>
+        <div *ngIf="orderInfo.controls.billingAddress.controls.address.invalid">
+            <p class="validation" *ngIf="orderInfo.controls.billingAddress.controls.address.errors.required">*This field is required</p>
+            <p class="validation" *ngIf="orderInfo.controls.billingAddress.controls.address.errors.pattern">*This field is incorrect</p>
+        </div>
+        <label for="city">
+            *City:
+            <input formControlName="city" type="string" id="city">
+        </label>
+        <label for="country">
+            *Country:
+            <input formControlName="country" type="string" id="country">
+        </label>
+        <div *ngIf="orderInfo.controls.billingAddress.controls.country.invalid">
+            <p class="validation" *ngIf="orderInfo.controls.billingAddress.controls.country.errors.required">*This field is required</p>
+            <p class="validation" *ngIf="orderInfo.controls.billingAddress.controls.country.errors.validator">*This field is incorrect</p>
+        </div>
+    </ng-container>
+
+<!--    // osobny controll:-->
+    <label>Shipping address same as billing:
+        <input type="checkbox" [formControl]="shippingSame">
+    </label>
+
+<!--    // chęść formGroup: -->
+    <label>Shipping address same as billing shippingSameCheckbox:
+        <input type="checkbox" formControlName="shippingSameCheckbox" id="shippingSameCheckbox">
+    </label>
+
+    <ng-container formGroupName="shippingAddress">
+        Billing address:
+        <label for="address">
+            <input formControlName="address" type="string" id="shippingAddress">
+        </label>
+        <label for="postalCode">
+            <input formControlName="postalCode" type="string" id="shippingPostalCode">
+        </label>
+
+        <label for="city">
+            <input formControlName="city" type="string" id="shippingCity">
+        </label>
+        <label for="country">
+            <input formControlName="country" type="string" id="shippingCountry">
+        </label>
+    </ng-container>
+
+    <button>send</button>
+
+<!--    <p class="invalid" *ngIf="orderInfo.controls.fullName.touched && orderInfo.controls.fullName.errors">Invalid fullname</p>-->
+<!--    <p class="invalid" *ngIf="orderInfo.controls.billingAddress.controls.address.touched && orderInfo.controls.fullName.errors">Invalid address</p>-->
+<!--    <p class="invalid" *ngIf="orderInfo.controls.billingAddress.controls.postalCode.touched && orderInfo.controls.fullName.errors">Invalid postal code</p>-->
+<!--    <p class="invalid" *ngIf="orderInfo.controls.billingAddress.controls.city.touched && orderInfo.controls.fullName.errors">Invalid city</p>-->
+<!--    <p class="invalid" *ngIf="orderInfo.controls.billingAddress.controls.country.touched && orderInfo.controls.fullName.errors">Invalid country</p>-->
+
+</form>

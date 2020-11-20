@@ -1,0 +1,48 @@
+<div class="container">
+    <form #signUp="ngForm"
+          [ngFormOptions]="{ updateOn: 'blur' }"
+          (submit)="signUp.form.valid && onSubmit(signUp)"
+          [appMustMatch]="['password', 'repeatPassword']"
+          novalidate
+          class="form-control">
+
+        <label for="email">Email:
+            <input type="text" [(ngModel)]="model.email" name="email" id="email" #email="ngModel" required email>
+        </label>
+        <div *ngIf="email.invalid">
+            <p class="validation" *ngIf="email.touched && email.errors.required">*This field is required</p>
+            <p class="validation" *ngIf="email.touched && email.invalid && !email.errors.required && email.errors.email">*This field has to contain email</p>
+        </div>
+
+        <label for="password">Password:
+            <input type="text" [(ngModel)]="model.password" #password="ngModel" name="password" id="password" minlength="6" required>
+        </label>
+        <div *ngIf="password.invalid">
+            <p class="validation" *ngIf="password.touched && password.errors.required">*This field is required</p>
+            <p class="validation" *ngIf="password.errors.minlength">*Min length = {{password.errors.minlength.requiredLength}}</p>
+        </div>
+
+        <label for="repeatPassword">Repeat password:
+            <input type="text" [(ngModel)]="model.repeatPassword" #repeatPassword="ngModel" name="repeatPassword" id="repeatPassword" required>
+        </label>
+        <div *ngIf="repeatPassword.invalid">
+            <p class="validation" *ngIf="repeatPassword.touched && repeatPassword.errors.required">*This field is required</p>
+            <p class="validation" *ngIf="repeatPassword.errors.mustMatch">*This field has to be matched to the password</p>
+        </div>
+
+
+        <label for="languages">Chose language:
+            <select ngModel name="languages" id="languages">
+                <option value="pl">PL</option>
+                <option value="en">EN</option>
+                <option value="de">DE</option>
+                <option value="ru">RU</option>
+                <option value="fr">FR</option>
+            </select>
+        </label>
+
+        <button [disabled]="signUp.invalid">Sign up</button>
+
+    </form>
+</div>
+
